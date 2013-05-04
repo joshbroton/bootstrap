@@ -76,4 +76,16 @@ describe("alert", function () {
     expect(element).toHaveClass('alert-info');
   });
 
+  it('issue 377 - should not create isolate scope', function () {
+
+    scope.hide = false;
+    var element = $compile('<alert ng-hide="hide">Default alert!</alert>')(scope);
+
+    expect(element.css('display')).not.toEqual('none');
+    scope.$apply(function () {
+      scope.hide = true;
+    });
+    expect(element.css('display')).toEqual('none');
+  });
+
 });
